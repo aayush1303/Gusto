@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+  scroll-behavior: smooth;
+}
+
+body{
+  min-height: 100vh;
+  overflow-y: hidden;
+  background-color: #fcfcfc;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+hr{
+  border: none;
+  height: 1px;
+  border-top: 1px solid #a9a9a9;
+}
+
+.sidebar.active{
+  background-color: #fff0ed;
+  border-color: orange;
+}
+
+.flex-column{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.list-table-format{
+  display: grid;
+  grid-template-columns: 0.4fr 0.5fr 0.9fr 0.9fr 0.1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  font-size: 15px;
+  border: 1px solid #cacaca;
+}
+
+.orders{
+  display: grid;
+  grid-template-columns: 0.5fr 2.5fr 1fr 1fr 1fr;
+  align-items: start;
+  gap: 30px;
+  border: 1px solid orange;
+  padding: 20px;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #505050;
+}
+
+@media(max-width:1000px){
+  .orders{
+    font-size: 12px;
+    grid-template-columns: 0.5fr 2fr 1fr;
+    padding: 15px 8px;
+  }
+}
+
+.list::-webkit-scrollbar{
+  display: none;
+  width: 0;
+}
+
+.order::-webkit-scrollbar{
+  display: none;
+  width: 0;
+}
