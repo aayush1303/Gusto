@@ -13,7 +13,9 @@ const port = 4000;
 
 //middleware
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'https://gusto-frontend.vercel.app' // Replace with your frontend domain
+}));
 
 //db connection
 connectDB();
