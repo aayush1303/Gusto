@@ -1,54 +1,77 @@
 import foodModel from "../models/foodModel.js";
-import fs from "fs";
+import {v2 as cloudinary} from "cloudinary";
+
+cloudinary.config({ 
+    cloud_name: 'dm0vydlig', 
+    api_key: '254769281123714', 
+    api_secret: 'Bvsn1_4AndVGbbLfN-kuIo5RRes'
+});
+
 
 
 //add food item
-
 const addFoodItem = async (req, res) => {
-    
-    let image_filename = `${req.file.filename}`;
-
-    const food = new foodModel({
+    try {
+      // Upload image to Cloudinary
+      const result = await new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          { resource_type: "image" },
+          (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            }
+          }
+        );
+  
+        // Pipe the image buffer into the upload stream
+        uploadStream.end(req.file.buffer);
+      });
+  
+      // Save food item with image URL from Cloudinary
+      const food = new foodModel({
         name: req.body.name,
         description: req.body.description,
         category: req.body.category,
         price: req.body.price,
-        image: image_filename,
-    });
-    try{
-        await food.save();
-        res.json({success: true, message: "Food Item Added Successfully"});
-    }catch(error){
-        console.log(error);
-        res.json({success: false, message: error.message});
+        image: result.secure_url, // Use Cloudinary URL
+      });
+  
+      await food.save();
+      res.json({ success: true, message: "Food Item Added Successfully" });
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: error.message });
     }
-}
-
-// all food list
-
-const listFood = async (req, res) => {
-    try{
-        const food = await foodModel.find();
-        res.json({success: true, data:food});
-    }catch(error){
-        console.log(error);
-        res.json({success: false, message: error.message});
+  };
+  
+  // List All Food Items
+  const listFood = async (req, res) => {
+    try {
+      const food = await foodModel.find();
+      res.json({ success: true, data: food });
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: error.message });
     }
-}
-
-const removeFoodItem = async (req, res) => {
-    try{
-        const food = await foodModel.findById(req.body.id); //id that is created in mongodb
-        fs.unlink(`uploads/${food.image}`,() => {})
-        
-        await foodModel.findByIdAndDelete(req.body.id);
-        res.json({success: true, message: "Food Item Deleted Successfully"});
-    }catch(error){
-        console.log(error);
-        res.json({success: false, message: error.message});
+  };
+  
+  // Remove Food Item
+  const removeFoodItem = async (req, res) => {
+    try {
+      const food = await foodModel.findById(req.body.id);
+  
+      // Remove image from Cloudinary
+      const publicId = food.image.match(/\/(?:v\d+\/)?([^/]+)\.[^/]+$/)[1]; // Extract publicId from URL
+      await cloudinary.uploader.destroy(publicId);
+  
+      await foodModel.findByIdAndDelete(req.body.id);
+      res.json({ success: true, message: "Food Item Deleted Successfully" });
+    } catch (error) {
+      console.log(error);
+      res.json({ success: false, message: error.message });
     }
-}
-
-export { addFoodItem,listFood,removeFoodItem };
-
-// 2
+  };
+  
+  export { addFoodItem, listFood, removeFoodItem };

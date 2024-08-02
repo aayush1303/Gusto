@@ -9,7 +9,7 @@ const FoodItem = ({id,name,price,description,image}) => {
   return (
     <div className='w-full m-auto border rounded-[15px] shadow-black '>
         <div className='relative'>
-            <img className='w-full rounded-tl-custom-tl rounded-tr-custom-tr rounded-bl-custom-bl rounded-br-custom-br' src={url+"/images/"+image} alt="" />
+            <img className='w-full rounded-tl-custom-tl rounded-tr-custom-tr rounded-bl-custom-bl rounded-br-custom-br' src={image} alt="" />
              {
                 !cartItems[id]?<img className='w-[40px] absolute bottom-2 right-2 rounded-[50%] cursor-pointer' onClick={()=>addToCart(id)} src = {assets.add_icon_white} alt=""/>
                 :<div className='absolute bottom-2 right-2 flex items-center gap-2.5 p-1.5 rounded-[50px] bg-white'>

@@ -58,7 +58,7 @@ const Cart = () => {
             return (
               <div>
                 <div className='my-2.5 text-black grid items-center text-[max(1vw,12px)]' style={{ gridTemplateColumns: '1fr 1.5fr 1fr 1fr 1fr 0.5fr' }}>
-                  <img className='w-[50px]' src={url+"/images/"+item.image} alt={item.title} />
+                  <img className='w-[50px]' src={item.image} alt={item.title} />
                   <p>{item.name}</p>
                   <p>${item.price}</p>
                   <p>{cartItems[item._id]}</p>
