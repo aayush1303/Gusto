@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
    
-  const url ='https://gusto-backend.vercel.app'
+  const url ='https://gusto-backend.vercel.app/'
 
   return (
     <div>
