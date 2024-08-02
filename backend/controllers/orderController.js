@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 //placing user order for frontend
 const placeOrder = async (req, res) => {
 
-    const frontendUrl = "http://localhost:5173"
+    const frontendUrl = "https://gusto-frontend.vercel.app"
 
     try {
         const newOrder = new orderModel({
