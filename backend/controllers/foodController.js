@@ -1,10 +1,11 @@
 import foodModel from "../models/foodModel.js";
 import {v2 as cloudinary} from "cloudinary";
+import 'dotenv/config.js';
 
-cloudinary.config({ 
-    cloud_name: 'dm0vydlig', 
-    api_key: '254769281123714', 
-    api_secret: 'Bvsn1_4AndVGbbLfN-kuIo5RRes'
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
 
